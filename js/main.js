@@ -4,27 +4,24 @@ const url = `https://docs.google.com/document/d/${docId}/export?format=txt`;
 function quebrarEmObjetos(conteudo, delimitadores) {
  if (!conteudo || !delimitadores?.length) return [];
 
- const primeiro = delimitadores[0];
- const regexSplit = new RegExp(`${primeiro}:`, 'g');
+ const regexBloco = new RegExp(
+  `${delimitadores[0]}:[\\s\\S]*?(?=${delimitadores[0]}:|$)`,
+  'gi'
+ );
+ const blocos = conteudo.match(regexBloco) || [];
 
- return conteudo
-  .split(regexSplit)
-  .filter((b) => b.trim())
-  .map((b) => {
-   const obj = {};
-
-   delimitadores.forEach((delim, i) => {
-    const proximo = delimitadores[i + 1];
-    const regexCampo = new RegExp(
-     `${delim}:\\s*([\\s\\S]*?)${proximo ? `${proximo}:` : '$'}`,
-     'i'
-    );
-    const match = b.match(regexCampo);
-    obj[delim.toLowerCase()] = match ? match[1].trim() : '';
-   });
-
-   return obj;
+ return blocos.map((bloco) => {
+  const obj = {};
+  delimitadores.forEach((delim) => {
+   const regexCampo = new RegExp(
+    `${delim}:\\s*([\\s\\S]*?)(?=${delimitadores.join(':|')}:|$)`,
+    'i'
+   );
+   const match = bloco.match(regexCampo);
+   obj[delim.toLowerCase()] = match ? match[1].trim() : '';
   });
+  return obj;
+ });
 }
 
 async function carregarDocumento() {
@@ -33,14 +30,6 @@ async function carregarDocumento() {
  return await res.text();
 }
 
-/**
- * ler o arquivo do drive - ok
- * identificar todos os titulos e textos - ok
- * titulo pode ser vazio mas textos nao - ok
- * fazer um grande array com essas informações - ok
- * interar, cada titulo + texto precisa ser um postit
- *
- */
 /**modal */
 const modal = document.getElementById('modal');
 const modalTitle = document.getElementById('modal-title');
