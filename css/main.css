@@ -55,23 +55,6 @@ h6 {
  line-height: 1.2;
 }
 
-/* Paleta de cores pastel */
-.yellow {
- background: #fff6a7;
-}
-.pink {
- background: #ffd3e2;
-}
-.blue {
- background: #c9ebff;
-}
-.green {
- background: #d7ffd1;
-}
-.purple {
- background: #e5d9ff;
-}
-
 header {
  position: fixed;
  top: 0;
@@ -88,6 +71,10 @@ header {
  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
  -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
  -moz-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+ h1 {
+  font-size: clamp(2.4rem, 2.2rem + 0.8vw, 3.2rem); /* ~24–32px */
+ }
 }
 
 main {
@@ -116,7 +103,7 @@ main {
 .mural {
  display: grid;
  grid-template-columns: repeat(3, 1fr);
- gap: 0.8rem;
+ gap: 2.4rem;
 }
 
 @media (max-width: 900px) {

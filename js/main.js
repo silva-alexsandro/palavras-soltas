@@ -32,13 +32,16 @@ async function carregarDocumento() {
 
 /**modal */
 const modal = document.getElementById('modal');
+const modalContent = document.getElementById('js-modal-content');
 const modalTitle = document.getElementById('modal-title');
 const modalText = document.getElementById('modal-text');
 const modalCloseBtn = document.getElementById('modal-close');
 
-function openModal(title, text) {
+function openModal(title, text, color) {
  modalTitle.textContent = title || 'Sem título';
  modalText.textContent = text;
+
+ modalContent.style.backgroundColor = `${color}`;
  modal.classList.add('active');
  modal.focus();
  document.body.style.overflow = 'hidden';
@@ -58,31 +61,49 @@ document.addEventListener('keydown', (e) => {
 });
 
 async function main() {
- console.log('main');
  const content = await carregarDocumento();
  const objs = quebrarEmObjetos(content, ['Titulo', 'Texto']);
- //js-mural
  const sectionMural = document.getElementById('js-mural');
 
- objs.forEach((e) => {
+ // cores base em formato HSL (mais fácil de manipular tons)
+ const coresBase = {
+  yellow: [52, 100, 82], // h, s, l
+  pink: [340, 100, 85],
+  blue: [200, 100, 90],
+  green: [100, 100, 88],
+  purple: [260, 100, 90],
+ };
+
+ const nomesCores = Object.keys(coresBase);
+
+ objs.forEach((e, i) => {
   const titulo = e.título || e.titulo || 'Sem título';
   const texto = e.texto;
+  const corNome = nomesCores[Math.floor(Math.random() * nomesCores.length)];
+  const [h, s, l] = coresBase[corNome];
 
-  // Criação do post-it dinamicamente
+  // varia o brilho de forma leve (-5% a +5%)
+  const variacao = Math.random() * 10 - 5;
+  const lFinal = Math.max(70, Math.min(95, l + variacao));
+  const corFinal = `hsl(${h}, ${s}%, ${lFinal}%)`;
+  // Criação do post-it
   const article = document.createElement('article');
-  article.className = 'postit-card';
+  article.className = `postit-card`;
   article.dataset.title = titulo;
   article.dataset.content = texto;
+
+  // define cor ligeiramente variada
+  article.style.backgroundColor = `hsl(${h}, ${s}%, ${lFinal}%)`;
+
   article.innerHTML = `
       <h3>${titulo}</h3>
       <p class="text-elipse">${texto}</p>
       <footer><p>click para ler mais...</p></footer>
     `;
 
-  // Evento de clique para abrir modal
-  article.addEventListener('click', () => openModal(titulo, texto));
-
+  article.addEventListener('click', () => openModal(titulo, texto, corFinal));
   sectionMural.appendChild(article);
  });
 }
+
 main();
