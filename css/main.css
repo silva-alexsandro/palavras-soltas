@@ -1,0 +1,249 @@
+:root {
+ font-size: 62.5%;
+}
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ -webkit-box-sizing: border-box;
+ -moz-box-sizing: border-box;
+}
+html,
+body {
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ scroll-behavior: smooth;
+}
+body {
+ background: #fafafa;
+ font-size: 1.6rem;
+ font-family: 'Poppins', sans-serif;
+ font-style: normal;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+ display: block;
+}
+ol,
+ul {
+ list-style: none;
+}
+table {
+ border-collapse: collapse;
+ border-spacing: 0;
+}
+a {
+ text-decoration: none;
+ color: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+ font-weight: 400;
+ line-height: 1.2;
+}
+
+/* Paleta de cores pastel */
+.yellow {
+ background: #fff6a7;
+}
+.pink {
+ background: #ffd3e2;
+}
+.blue {
+ background: #c9ebff;
+}
+.green {
+ background: #d7ffd1;
+}
+.purple {
+ background: #e5d9ff;
+}
+
+header {
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ height: 6rem;
+ background: #fff;
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;
+ gap: 0.8rem;
+ padding: 0 2rem;
+ z-index: 1000;
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+ -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+ -moz-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+main {
+ padding: 9rem 2rem;
+ max-width: 1200px;
+ margin: 0 auto;
+}
+
+.font-size-sm {
+ font-size: clamp(1.2rem, 1rem + 0.3vw, 1.4rem); /* ~12–14px */
+}
+.font-size-lg,
+.title {
+ font-size: clamp(2.4rem, 2.2rem + 0.8vw, 3.2rem); /* ~24–32px */
+}
+
+.title {
+ font-weight: 800;
+ font-size: clamp(3.2rem, 2.8rem + 1vw, 4rem); /* ~32–40px */
+}
+.subtitle {
+ font-size: clamp(2rem, 1.8rem + 0.6vw, 2.4rem); /* ~20–24px */
+ font-weight: 500;
+}
+
+.mural {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 0.8rem;
+}
+
+@media (max-width: 900px) {
+ .mural {
+  grid-template-columns: repeat(2, 1fr);
+ }
+}
+
+@media (max-width: 600px) {
+ .mural {
+  grid-template-columns: 1fr;
+ }
+}
+
+.text-elipse {
+ white-space: normal;
+ display: -webkit-box;
+ -webkit-line-clamp: 2;
+ -webkit-box-orient: vertical;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ margin-left: var(--space-xs);
+}
+
+article.postit-card {
+ display: flex;
+ flex-direction: column;
+ gap: 0.8rem;
+ margin-top: 2rem;
+ border-radius: 0.8rem;
+
+ box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
+ padding: 1.6rem 2rem;
+ cursor: pointer;
+ user-select: none;
+ transition: transform 0.15s ease, box-shadow 0.15s ease;
+ position: relative;
+
+ &:hover {
+  transform: translateY(-5px);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+ }
+
+ h3 {
+  font-size: clamp(2rem, 1.8rem + 0.6vw, 2.4rem);
+  font-weight: 700;
+ }
+ p {
+  font-size: clamp(1.6rem, 1.5rem + 0.5vw, 1.8rem);
+  line-height: 1.3;
+ }
+ footer {
+  margin-top: 1rem;
+  p {
+   font-size: clamp(1.2rem, 1rem + 0.3vw, 1.4rem);
+   font-style: italic;
+   text-align: right;
+   font-weight: 300;
+  }
+ }
+}
+
+/* Modal fundo */
+.modal-overlay {
+ position: fixed;
+ inset: 0;
+ background: rgba(0, 0, 0, 0.5);
+ display: none; /* escondido por padrão */
+ align-items: center;
+ justify-content: center;
+ z-index: 1500;
+}
+
+.modal-overlay.active {
+ display: flex;
+}
+
+/* Modal conteúdo */
+.modal-content {
+ background: #fff;
+ border-radius: 0.8rem;
+ max-width: 600px;
+ width: 90%;
+ padding: 3rem 4rem;
+ box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+ position: relative;
+ animation: modalShow 0.3s ease forwards;
+}
+
+@keyframes modalShow {
+ from {
+  opacity: 0;
+  transform: scale(0.9);
+ }
+ to {
+  opacity: 1;
+  transform: scale(1);
+ }
+}
+
+.modal-content h3 {
+ margin-top: 0;
+ font-size: clamp(2rem, 1.8rem + 0.6vw, 2.4rem);
+ font-weight: 500;
+}
+
+.modal-content p {
+ font-weight: 400;
+ line-height: 1.5;
+ font-size: clamp(1.6rem, 1.5rem + 0.5vw, 1.8rem);
+ white-space: pre-wrap;
+ margin-top: 1.4rem;
+}
+
+/* Botão fechar */
+.modal-close {
+ position: absolute;
+ top: 12px;
+ right: 16px;
+ background: transparent;
+ border: none;
+ font-size: 2.4rem;
+ cursor: pointer;
+ color: #666;
+ transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+ color: #000;
+}
