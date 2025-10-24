@@ -34,13 +34,15 @@ async function carregarDocumento() {
 const modal = document.getElementById('modal');
 const modalContent = document.getElementById('js-modal-content');
 const modalTitle = document.getElementById('modal-title');
+const modalAutor = document.getElementById('modal-autor');
 const modalText = document.getElementById('modal-text');
 const modalCloseBtn = document.getElementById('modal-close');
 
-function openModal(title, text, color) {
+function openModal(title, text, autor, color) {
  modalTitle.textContent = title || 'Sem título';
  modalText.textContent = text;
-
+ modalAutor.textContent = autor;
+ 
  modalContent.style.backgroundColor = `${color}`;
  modal.classList.add('active');
  modal.focus();
@@ -62,7 +64,7 @@ document.addEventListener('keydown', (e) => {
 
 async function main() {
  const content = await carregarDocumento();
- const objs = quebrarEmObjetos(content, ['Titulo', 'Texto']);
+ const objs = quebrarEmObjetos(content, ['Titulo', 'Autor', 'Texto']);
  const sectionMural = document.getElementById('js-mural');
 
  // cores base em formato HSL (mais fácil de manipular tons)
@@ -76,9 +78,10 @@ async function main() {
 
  const nomesCores = Object.keys(coresBase);
 
- objs.forEach((e, i) => {
+ objs.forEach((e) => {
   const titulo = e.título || e.titulo || 'Sem título';
   const texto = e.texto;
+  const autor = e.autor || '';
   const corNome = nomesCores[Math.floor(Math.random() * nomesCores.length)];
   const [h, s, l] = coresBase[corNome];
 
@@ -101,7 +104,9 @@ async function main() {
       <footer><p>click para ler mais...</p></footer>
     `;
 
-  article.addEventListener('click', () => openModal(titulo, texto, corFinal));
+  article.addEventListener('click', () =>
+   openModal(titulo, texto, autor, corFinal)
+  );
   sectionMural.appendChild(article);
  });
 }

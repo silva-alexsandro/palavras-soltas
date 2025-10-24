@@ -83,9 +83,6 @@ main {
  margin: 0 auto;
 }
 
-.font-size-sm {
- font-size: clamp(1.2rem, 1rem + 0.3vw, 1.4rem); /* ~12–14px */
-}
 .font-size-lg,
 .title {
  font-size: clamp(2.4rem, 2.2rem + 0.8vw, 3.2rem); /* ~24–32px */
@@ -183,7 +180,6 @@ article.postit-card {
 
 /* Modal conteúdo */
 .modal-content {
- background: #fff;
  border-radius: 0.8rem;
  max-width: 600px;
  width: 90%;
@@ -217,7 +213,12 @@ article.postit-card {
  white-space: pre-wrap;
  margin-top: 1.4rem;
 }
-
+.modal-content p#modal-autor {
+ font-weight: 300;
+ font-size: clamp(1.2rem, 1rem + 0.3vw, 1.4rem); /* ~12–14px */
+ text-align: right;
+ margin-top: 1.4rem;
+}
 /* Botão fechar */
 .modal-close {
  position: absolute;
